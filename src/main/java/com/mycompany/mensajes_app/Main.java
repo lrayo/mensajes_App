@@ -4,7 +4,6 @@
  */
 package com.mycompany.mensajes_app;
 
-import java.sql.Connection;
 import java.util.Scanner;
 
 /**
@@ -44,9 +43,6 @@ public class Main {
                 case 4:
                         MensajesService.borrarMensaje();
                     break;
-                
-                default:
-                    throw new AssertionError();
             }
             
         } while (opcion != 5);

@@ -4,6 +4,8 @@
  */
 package com.mycompany.mensajes_app;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Luis Rayo
@@ -11,13 +13,31 @@ package com.mycompany.mensajes_app;
 public class MensajesService {
     
      public static void CrearMensaje() {
-        
+         Scanner sc = new Scanner(System.in);
+         
+         System.out.println("Escribe tu mensaje");
+         String mensaje = sc.nextLine();
+         
+         System.out.println("Tu nombre");
+         String nombre = sc.nextLine();
+         
+         Mensajes registro = new Mensajes();
+         registro.setMensaje(mensaje);
+         registro.setAutor_mensaje(nombre);
+         
+         //Aca se envia a dao
+         MensajesDao.crearMensajeDB(registro );
     }
      
+   //------------------------------------------------------------------------------------------ 
       
        public static void listarMensaje() {
-        
+           
+            //llamar metodo leermensajesdb
+            MensajesDao.leerMensajeDB();
     }
+       
+       //-------------------------------------------------------------------------------------------
        
         public static void borrarMensaje() {
         
