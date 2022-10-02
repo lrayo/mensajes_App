@@ -7,6 +7,7 @@ package com.mycompany.mensajes_app;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -15,6 +16,8 @@ import java.sql.ResultSet;
 public class MensajesDao {
     
     //Metodos Crear, leer, borrar y actualizar
+    
+    //----------------------------CREAR-------------------------------------
     public static void crearMensajeDB(Mensajes mensaje) {
         //Crear conexion a base de datos
         Conexion db_connect = new Conexion();
@@ -40,7 +43,7 @@ public class MensajesDao {
         
     }
     
-    //______________________________________________________________
+    //__________________________LEER___________________________________
     
      public static void leerMensajeDB() {
         
@@ -68,14 +71,64 @@ public class MensajesDao {
             }
     }
      
-     //--------------------------------------------------------------------------------------------------------------
+     //----------------------------------------------BORRAR----------------------------------------------------------------
      
       public static void borrarMensajeDB(int id_mensaje) {
-        
+          
+           Conexion db_connect = new Conexion();
+          
+           try (Connection conexion = db_connect.get_connection()) {
+                   PreparedStatement ps = null;
+                   
+                   try {
+                       String query = "DELETE FROM mensajes WHERE id_mensaje = ?";
+                       ps = conexion.prepareStatement(query);
+                       ps.setInt(1, id_mensaje);
+                       ps.executeUpdate();
+                       System.out.println("El mensaje ha sido borrado");
+                            
+               } catch (SQLException e) {
+                       System.out.println("No se pudo borrar el mensaje");
+                       System.out.println(e);
+               }
+                          
+        }catch (Exception ex) {
+                  
+                  System.out.println(ex);
+            }
     }
       
+      
+      //-----------------------------------------MODIFICAR--------------------------------------------------------------------
        public static void actualizarMensajeDB(Mensajes mensaje) {
         
+            Conexion db_connect = new Conexion();
+           
+             try (Connection conexion = db_connect.get_connection()) {
+                   PreparedStatement ps = null;
+                   
+                   try {
+                       String query = "UPDATE mensajes SET mensaje = ? WHERE id_mensaje = ?";
+                       ps = conexion.prepareStatement(query);
+                       ps.setString(1, mensaje.getMensaje());
+                       ps.setInt(2, mensaje.getId_mensaje());
+                       ps.executeUpdate();
+                       System.out.println("Se ha actualizado correctamente");
+                            
+               } catch (SQLException e) {
+                       System.out.println("No se pudo actualizar el mensaje");
+                       System.out.println(e);
+               }
+                          
+        }catch (Exception ex) {
+                  
+                  System.out.println(ex);
+            }
+           
+           
+           
+           
+           
     }
     
 }
